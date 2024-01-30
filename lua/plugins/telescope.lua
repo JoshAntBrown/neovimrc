@@ -19,8 +19,9 @@ return {
       require("telescope").setup()
       pcall(require("telescope").load_extension, "fzf")
 
-      vim.keymap.set("n", "<leader>pf", require("telescope.builtin").find_files, {})
-      vim.keymap.set("n", "<leader>ps", require("telescope.builtin").git_status, {})
+      vim.keymap.set("n", "<leader>pf", require("telescope.builtin").find_files, { desc = "[pf] Find project files"})
+      vim.keymap.set("n", "<leader>ps", require("telescope.builtin").git_status, { desc = "[ps] Find project git status" })
+      vim.keymap.set("n", "<leader>pg", require("telescope.builtin").live_grep, { desc = "[pg] Find project grep" })
       vim.keymap.set("n", "<leader>?", require("telescope.builtin").oldfiles, { desc = "[?] Find recently opened files" })
       vim.keymap.set("n", "<leader><space>", require("telescope.builtin").buffers, { desc = "[ ] Find existing buffers" })
       vim.keymap.set("n", "<leader>/", function()
