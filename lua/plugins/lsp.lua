@@ -36,6 +36,14 @@ return {
             })
           end,
 
+          ["ruby_ls"] = function()
+            require("lspconfig").ruby_ls.setup({
+              on_attach = on_attach,
+              capabilities = capabilities,
+              cmd = { os.getenv("HOME") .. "/.asdf/shims/ruby-lsp" },
+            })
+          end,
+
           ["lua_ls"] = function()
             local lspconfig = require("lspconfig")
 
