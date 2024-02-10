@@ -1,47 +1,6 @@
 return {
-  -- {
-  --   "folke/tokyonight.nvim",
-  --   lazy = false,
-  --   priority = 1000,
-  --   config = function ()
-  --     require("tokyonight").setup({
-  --       style = "night",
-  --     })
-  --     vim.cmd.colorscheme("tokyonight")
-  --   end
-  -- },
-
   {
-    -- Theme inspired by Atom
-    "navarasu/onedark.nvim",
-    priority = 1000,
-    config = function()
-      require("onedark").setup({
-        transparent = true,
-        style = "darker",
-      })
-      -- vim.cmd.colorscheme("onedark")
-    end,
-  },
-
-  -- {
-  --   "rose-pine/neovim",
-  --   name = "rose-pine",
-  --   config = function()
-  --     require("rose-pine").setup({
-  --       variant = "moon",
-  --       styles = {
-  --         italic = false
-  --       },
-  --     })
-  --     vim.cmd("colorscheme rose-pine")
-  --     local p = require("rose-pine.palette")
-  --
-  --     vim.api.nvim_set_hl(0, '@lsp.type.parameter', { fg=p.love })
-  --   end,
-  -- },
-
-  {
+    -- Catppuccin Frappe theme
     "catppuccin/nvim",
     name = "catppuccin",
     priority = 1000,
@@ -55,7 +14,7 @@ return {
   },
 
   {
-    -- Use lualine as statusline
+    -- Status line UI
     "nvim-lualine/lualine.nvim",
     opts = {
       options = {
@@ -68,12 +27,13 @@ return {
   },
 
   {
-    -- Use fidget for notifications
+    -- Notification UI
     "j-hui/fidget.nvim",
     config = true,
   },
 
   {
+    -- Keybindings UI
     "folke/which-key.nvim",
     config = true,
   },
