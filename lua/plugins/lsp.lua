@@ -11,12 +11,6 @@ return {
     config = function()
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      local on_attach = function()
-        vim.keymap.set("n", "K", vim.lsp.buf.hover, { buffer = 0 })
-        vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, { buffer = 0 })
-        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { buffer = 0 })
-      end
-
       require("mason").setup()
       require("mason-lspconfig").setup({
         ensure_installed = {
@@ -31,14 +25,12 @@ return {
         handlers = {
           function(server_name)
             require("lspconfig")[server_name].setup({
-              on_attach = on_attach,
               capabilities = capabilities,
             })
           end,
 
           ["ruby_ls"] = function()
             require("lspconfig").ruby_ls.setup({
-              on_attach = on_attach,
               capabilities = capabilities,
               cmd = { os.getenv("HOME") .. "/.asdf/shims/ruby-lsp" },
             })
@@ -48,7 +40,6 @@ return {
             local lspconfig = require("lspconfig")
 
             lspconfig.lua_ls.setup({
-              on_attach = on_attach,
               capabilities = capabilities,
               settings = {
                 Lua = {
