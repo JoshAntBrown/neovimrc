@@ -2,6 +2,13 @@ return {
   "tpope/vim-sleuth", -- Detect tabstop and shiftwidth automatically
 
   {
+    "mbbill/undotree",
+    config = function()
+     vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+    end
+  },
+
+  {
     "numToStr/Comment.nvim",
     config = true,
   },
