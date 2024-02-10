@@ -14,6 +14,30 @@ return {
   "theprimeagen/vim-be-good",
 
   {
+    "folke/zen-mode.nvim",
+    opts = {
+      window = {
+        height = .8,
+        options = {
+          signcolumn = "no",
+          number = false,
+          relativenumber = false,
+          colorcolumn = "0",
+        },
+      },
+      plugins = {
+        tmux = {
+          enabled = true,
+        },
+        alacritty = {
+          enabled = true,
+          font = "14",
+        },
+      },
+    },
+  },
+
+  {
     "folke/twilight.nvim",
     config = true,
   },
