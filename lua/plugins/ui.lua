@@ -33,6 +33,12 @@ return {
   },
 
   {
+    -- Diagnostics UI
+    "folke/trouble.nvim",
+    config = true,
+  },
+
+  {
     -- Keybindings UI
     "folke/which-key.nvim",
     config = true,
