@@ -16,7 +16,13 @@ return {
     },
 
     config = function()
-      require("telescope").setup()
+      require("telescope").setup({
+        pickers = {
+          find_files = {
+            find_command = {'rg', '--files', '--hidden', '-g', '!.git'},
+          },
+        },
+      })
       pcall(require("telescope").load_extension, "fzf")
 
       local builtin = require('telescope.builtin')
