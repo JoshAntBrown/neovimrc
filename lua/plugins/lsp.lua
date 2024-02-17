@@ -25,6 +25,7 @@ return {
           "emmet_language_server",
           "terraformls",
           "tsserver",
+          "stimulus_ls",
         },
 
         handlers = {
