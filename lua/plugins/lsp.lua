@@ -23,6 +23,7 @@ return {
           "ruby_ls",
           "html",
           "emmet_language_server",
+          "tailwindcss",
           "terraformls",
           "tsserver",
           "stimulus_ls",
