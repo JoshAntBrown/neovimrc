@@ -89,6 +89,28 @@ return {
             })
           end,
 
+          ["tailwindcss"] = function()
+            local lspconfig = require("lspconfig")
+
+            lspconfig.tailwindcss.setup({
+              capabilities = capabilities,
+              settings = {
+                tailwindCSS = {
+                  experimental = {
+                    classRegex = {
+                      [[class= '([^']*)]],
+                      [[class: '([^']*)]],
+                      [[class= "([^"]*)]],
+                      [[class: "([^"]*)]],
+                      '~H""".*class="([^"]*)".*"""',
+                      '~F""".*class="([^"]*)".*"""',
+                    },
+                  },
+                },
+              },
+            })
+          end,
+
           ["lua_ls"] = function()
             local lspconfig = require("lspconfig")
 
