@@ -27,6 +27,7 @@ return {
           "terraformls",
           "tsserver",
           "stimulus_ls",
+          "stylelint_lsp",
         },
 
         handlers = {
