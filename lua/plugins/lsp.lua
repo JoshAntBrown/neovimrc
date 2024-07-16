@@ -6,6 +6,7 @@ return {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
       "hrsh7th/cmp-nvim-lsp",
+      "preservim/vimux",
     },
 
     config = function()
@@ -41,6 +42,33 @@ return {
             require("lspconfig").ruby_lsp.setup({
               capabilities = capabilities,
               cmd = { os.getenv("HOME") .. "/.asdf/shims/ruby-lsp" },
+              on_attach = function(client)
+                client.commands["rubyLsp.runTest"] = function(command)
+                  local args = command.arguments
+                  local test_command = args[3]
+                  vim.cmd("redraw")
+                  vim.cmd("!" .. test_command)
+                end
+
+                client.commands["rubyLsp.runTestInTerminal"] = function(command)
+                  local args = command.arguments
+                  local test_command = args[3]
+                  vim.g.VimuxOrientation = "h"
+                  vim.g.VimuxHeight = "50"
+                  vim.fn.VimuxRunCommand(test_command)
+                  vim.fn.system("tmux select-pane -t 1")
+                end
+
+                -- Enable codelens
+                vim.api.nvim_command([[augroup lsp_codelens]])
+                vim.api.nvim_command([[autocmd!]])
+                vim.api.nvim_command(
+                  [[autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
+                )
+                vim.api.nvim_command([[augroup END]])
+
+                vim.lsp.codelens.refresh()
+              end,
             })
           end,
 

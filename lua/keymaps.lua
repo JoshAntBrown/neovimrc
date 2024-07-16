@@ -44,3 +44,15 @@ autocmd("LspAttach", {
     vim.keymap.set("n", "]d", vim.diagnostic.goto_next, opts)
   end,
 })
+
+vim.keymap.set("n", "<leader>l", vim.lsp.codelens.run, { desc = "Run CodeLens" })
+
+if vim.lsp.inlay_hint then
+  vim.keymap.set("n", "<leader>L", function()
+    if vim.lsp.inlay_hint.is_enabled() then
+      vim.lsp.inlay_hint.enable(false, nil)
+    else
+      vim.lsp.inlay_hint.enable(true, nil)
+    end
+  end, { desc = "Toggle Inlay Hints" })
+end
