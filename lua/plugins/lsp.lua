@@ -59,13 +59,53 @@ return {
                   vim.fn.system("tmux select-pane -t 1")
                 end
 
+                client.commands["rubyLsp.debugTest"] = function(command)
+                  local args = command.arguments
+                  local test_command = args[3]
+
+                  -- Split the command into arguments
+                  local cmd_args = {}
+                  for arg in test_command:gmatch("%S+") do
+                    table.insert(cmd_args, arg)
+                  end
+
+                  -- Extract the command and the rest of the arguments
+                  table.remove(cmd_args, 1) -- ignore the first argument since it runs ruby
+                  local cmd = table.remove(cmd_args, 1)
+
+                  -- Start the debug session
+                  require("dap").run({
+                    type = "ruby",
+                    name = "debug test",
+                    request = "attach",
+                    localfs = true,
+                    command = cmd,
+                    script = cmd_args,
+                  })
+                end
+
                 -- Enable codelens
-                vim.api.nvim_command([[augroup lsp_codelens]])
-                vim.api.nvim_command([[autocmd!]])
-                vim.api.nvim_command(
-                  [[autocmd BufEnter,CursorHold,InsertLeave <buffer> lua vim.lsp.codelens.refresh()]]
-                )
-                vim.api.nvim_command([[augroup END]])
+                -- Create the autocommand group
+                local augroup = vim.api.nvim_create_augroup("lsp_codelens", { clear = true })
+
+                -- Function to safely refresh codelens
+                local function safe_codelens_refresh()
+                  local bufnr = vim.api.nvim_get_current_buf()
+                  local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
+                  for _, client in ipairs(clients) do
+                    if client.server_capabilities.codeLensProvider then
+                      vim.lsp.codelens.refresh()
+                      return
+                    end
+                  end
+                end
+
+                -- Set up the autocommand to refresh codelens safely
+                vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+                  group = augroup,
+                  buffer = 0,
+                  callback = safe_codelens_refresh,
+                })
 
                 vim.lsp.codelens.refresh()
               end,
