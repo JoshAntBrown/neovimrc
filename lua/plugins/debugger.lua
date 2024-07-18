@@ -33,12 +33,12 @@ return {
 
     dap.adapters.ruby = function(callback, config)
       vim.env.RUBY_DEBUG_OPEN = "true"
-      vim.env.RUBY_DEBUG_PORT = "38697"
+      vim.env.RUBY_DEBUG_PORT = "38698"
 
       callback({
         type = "server",
         host = "127.0.0.1",
-        port = "38697",
+        port = "38698",
         executable = {
           command = config.command,
           args = config.script,
@@ -57,6 +57,13 @@ return {
         localfs = true,
         command = "ruby",
         script = { "${file}" },
+      },
+      {
+        type = "ruby",
+        name = "debug rails dev",
+        request = "attach",
+        localfs = true,
+        command = "bin/dev",
       },
       {
         type = "ruby",
