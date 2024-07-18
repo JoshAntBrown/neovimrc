@@ -107,7 +107,9 @@ return {
                   callback = safe_codelens_refresh,
                 })
 
-                vim.lsp.codelens.refresh()
+                if client.server_capabilities.codeLensProvider then
+                  vim.lsp.codelens.refresh()
+                end
               end,
             })
           end,

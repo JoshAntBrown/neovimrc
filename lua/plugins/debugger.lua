@@ -44,6 +44,9 @@ return {
           args = config.script,
         },
       })
+
+      vim.env.RUBY_DEBUG_OPEN = nil
+      vim.env.RUBY_DEBUG_PORT = nil
     end
 
     dap.configurations.ruby = {
@@ -53,7 +56,7 @@ return {
         request = "attach",
         localfs = true,
         command = "ruby",
-        script = "${file}",
+        script = { "${file}" },
       },
       {
         type = "ruby",
@@ -61,7 +64,7 @@ return {
         request = "attach",
         localfs = true,
         command = "rspec",
-        script = "${file}",
+        script = { "${file}" },
       },
     }
   end,
