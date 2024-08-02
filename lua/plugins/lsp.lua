@@ -42,7 +42,7 @@ return {
             require("lspconfig").ruby_lsp.setup({
               capabilities = capabilities,
               cmd = { os.getenv("HOME") .. "/.asdf/shims/ruby-lsp" },
-              on_attach = function(client)
+              on_attach = function(client, bufnr)
                 client.commands["rubyLsp.runTest"] = function(command)
                   local args = command.arguments
                   local test_command = args[3]
@@ -84,31 +84,13 @@ return {
                   })
                 end
 
-                -- Enable codelens
-                -- Create the autocommand group
-                local augroup = vim.api.nvim_create_augroup("lsp_codelens", { clear = true })
-
-                -- Function to safely refresh codelens
-                local function safe_codelens_refresh()
-                  local bufnr = vim.api.nvim_get_current_buf()
-                  local clients = vim.lsp.get_active_clients({ bufnr = bufnr })
-                  for _, client in ipairs(clients) do
-                    if client.server_capabilities.codeLensProvider then
-                      vim.lsp.codelens.refresh()
-                      return
-                    end
-                  end
-                end
-
-                -- Set up the autocommand to refresh codelens safely
-                vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-                  group = augroup,
-                  buffer = 0,
-                  callback = safe_codelens_refresh,
-                })
-
                 if client.server_capabilities.codeLensProvider then
-                  vim.lsp.codelens.refresh()
+                  vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
+                    buffer = bufnr,
+                    callback = function()
+                      vim.lsp.codelens.refresh({ bufnr = bufnr })
+                    end,
+                  })
                 end
               end,
             })
