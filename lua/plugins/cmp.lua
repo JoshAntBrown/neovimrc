@@ -1,7 +1,5 @@
 return {
 
-  "github/copilot.vim",
-
   {
     "hrsh7th/nvim-cmp",
 
@@ -42,6 +40,13 @@ return {
         }),
       })
 
+      cmp.setup.filetype("sql", {
+        sources = {
+          { name = "vim-dadbod-completion" },
+          { name = "buffer" },
+        }
+      })
+
       -- Set configuration for specific filetype.
       cmp.setup.filetype("gitcommit", {
         sources = cmp.config.sources({
@@ -51,6 +56,7 @@ return {
           { name = "buffer" },
         }),
       })
+
       require("gitmoji").setup({
         completion = {
           append_space = true,
