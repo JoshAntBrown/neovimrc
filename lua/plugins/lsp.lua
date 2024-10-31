@@ -26,7 +26,7 @@ return {
           "emmet_language_server",
           "tailwindcss",
           "terraformls",
-          "tsserver",
+          "ts_ls",
           "stimulus_ls",
           "stylelint_lsp",
         },
