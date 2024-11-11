@@ -3,27 +3,6 @@ return {
   "github/copilot.vim",
 
   {
-    "jackMort/ChatGPT.nvim",
-    event = "VeryLazy",
-    config = function()
-      require("chatgpt").setup({
-        api_key_cmd = "bw get password 00b6cab8-23c3-4481-9f74-b0f201522efa",
-        openai_params = {
-          model = "gpt-4o",
-        },
-        openai_edit_params = {
-          model = "gpt-4o",
-        },
-      })
-    end,
-    dependencies = {
-      "MunifTanjim/nui.nvim",
-      "nvim-lua/plenary.nvim",
-      "nvim-telescope/telescope.nvim",
-    },
-  },
-
-  {
     "yetone/avante.nvim",
     event = "VeryLazy",
     lazy = false,
