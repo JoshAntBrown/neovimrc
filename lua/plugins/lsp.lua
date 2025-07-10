@@ -85,57 +85,6 @@ return {
             },
           },
         },
-        on_attach = function(client, bufnr)
-          client.commands["rubyLsp.runTest"] = function(command)
-            local args = command.arguments
-            local test_command = args[3]
-            vim.cmd("redraw")
-            vim.cmd("!" .. test_command)
-          end
-
-          client.commands["rubyLsp.runTestInTerminal"] = function(command)
-            local args = command.arguments
-            local test_command = args[3]
-            vim.g.VimuxOrientation = "h"
-            vim.g.VimuxHeight = "50"
-            vim.fn.VimuxRunCommand(test_command)
-            vim.fn.system("tmux select-pane -t 1")
-          end
-
-          client.commands["rubyLsp.debugTest"] = function(command)
-            local args = command.arguments
-            local test_command = args[3]
-
-            -- Split the command into arguments
-            local cmd_args = {}
-            for arg in test_command:gmatch("%S+") do
-              table.insert(cmd_args, arg)
-            end
-
-            -- Extract the command and the rest of the arguments
-            table.remove(cmd_args, 1) -- ignore the first argument since it runs ruby
-            local cmd = table.remove(cmd_args, 1)
-
-            -- Start the debug session
-            require("dap").run({
-              type = "ruby",
-              name = "debug test",
-              request = "attach",
-              localfs = true,
-              command = cmd,
-              script = cmd_args,
-            })
-          end
-
-          if client.server_capabilities.codeLensProvider then
-            vim.api.nvim_create_autocmd({ "BufEnter", "CursorHold", "InsertLeave" }, {
-              buffer = bufnr,
-              callback = function()
-                vim.lsp.codelens.refresh({ bufnr = bufnr })
-              end,
-            })
-          end
-        end,
       })
     end,
   },
