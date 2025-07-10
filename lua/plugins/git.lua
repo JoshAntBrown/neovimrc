@@ -31,6 +31,8 @@ return {
 
   {
     "lewis6991/gitsigns.nvim",
-    config = true,
+    config = {
+      current_line_blame = true,
+    },
   },
 }
