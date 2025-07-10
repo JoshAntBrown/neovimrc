@@ -20,3 +20,7 @@ vim.opt.undodir = os.getenv("HOME") .. "/.local/share/nvim/undodir"
 vim.opt.undofile = true
 
 vim.opt.colorcolumn = "80"
+
+vim.diagnostic.config({
+  virtual_text = true
+})
