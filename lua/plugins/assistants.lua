@@ -9,10 +9,12 @@ return {
     version = false,
     opts = {
       provider = "claude",
-      claude = {
-        api_key_name =
-        "cmd:security find-generic-password -a " .. os.getenv("USER") .. " -s ANTHROPIC_API_KEY -w",
-      },
+      providers = {
+        claude = {
+          api_key_name =
+          "cmd:security find-generic-password -a " .. os.getenv("USER") .. " -s ANTHROPIC_API_KEY -w",
+        },
+      }
     },
     build = "make",
     dependencies = {
