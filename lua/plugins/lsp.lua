@@ -58,21 +58,6 @@ return {
               },
             })
           end,
-
-          ["lua_ls"] = function()
-            local lspconfig = require("lspconfig")
-
-            lspconfig.lua_ls.setup({
-              capabilities = capabilities,
-              settings = {
-                Lua = {
-                  diagnostics = {
-                    globals = { "vim" },
-                  },
-                },
-              },
-            })
-          end,
         },
       })
 
