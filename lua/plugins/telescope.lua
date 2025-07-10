@@ -34,6 +34,14 @@ return {
       vim.keymap.set("n", "<leader>?", builtin.oldfiles, { desc = "[?] Find recently opened files" })
       vim.keymap.set("n", "<leader><space>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 
+      vim.keymap.set("n", "<leader>pxg", function()
+        builtin.live_grep({
+          additional_args = function()
+            return { "--glob", "!**/*_test.*", "--glob", "!**/*spec.*" }
+          end
+        })
+      end, { desc = "[pxg] Live grep excluding test/spec files" })
+
       vim.keymap.set('n', '<leader>pws', function()
         local word = vim.fn.expand("<cword>")
         builtin.grep_string({ search = word })
@@ -43,6 +51,16 @@ return {
         local word = vim.fn.expand("<cWORD>")
         builtin.grep_string({ search = word })
       end)
+
+      vim.keymap.set("n", "<leader>pxws", function()
+        local word = vim.fn.expand("<cword>")
+        builtin.grep_string({
+          search = word,
+          additional_args = function()
+            return { "--glob", "!**/*_test.*", "--glob", "!**/*spec.*" }
+          end
+        })
+      end, { desc = "[pxws] Grep current word excluding test/spec files" })
 
       vim.keymap.set("n", "<leader>/", function()
         builtin.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown {
