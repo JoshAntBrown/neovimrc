@@ -78,6 +78,13 @@ return {
 
       require("lspconfig").ruby_lsp.setup({
         capabilities = capabilities,
+        init_options = {
+          addonSettings = {
+            ["Ruby LSP Rails"] = {
+              enablePendingMigrationsPrompt = false,
+            },
+          },
+        },
         on_attach = function(client, bufnr)
           client.commands["rubyLsp.runTest"] = function(command)
             local args = command.arguments
