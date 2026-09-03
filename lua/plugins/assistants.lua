@@ -1,7 +1,5 @@
 return {
 
-  "github/copilot.vim",
-
   {
     "yetone/avante.nvim",
     event = "VeryLazy",
