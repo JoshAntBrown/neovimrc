@@ -29,10 +29,17 @@ local function open_file_command(command)
 end
 
 local function setup_refresh_autocmd()
-  vim.api.nvim_create_autocmd({ 'LspAttach', 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+  -- vim.lsp.codelens.enable() (0.11+) keeps lenses refreshed automatically,
+  -- replacing the old manual refresh() on BufEnter/CursorHold/InsertLeave.
+  vim.api.nvim_create_autocmd('LspAttach', {
     pattern = { '*.rb', '*.erb' },
-    callback = function(args) vim.lsp.codelens.refresh({ bufnr = args.buf }) end,
-    desc = 'Refresh active code lenses',
+    callback = function(args)
+      local client = vim.lsp.get_client_by_id(args.data.client_id)
+      if client and client:supports_method('textDocument/codeLens', args.buf) then
+        vim.lsp.codelens.enable(true, { bufnr = args.buf })
+      end
+    end,
+    desc = 'Enable code lenses',
   })
 end
 

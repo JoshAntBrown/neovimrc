@@ -52,6 +52,7 @@ return {
   {
     -- Keybindings UI
     "folke/which-key.nvim",
+    dependencies = { "nvim-tree/nvim-web-devicons" },
     config = true,
   },
 }
