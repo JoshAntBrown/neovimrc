@@ -17,6 +17,42 @@ return {
         require("cmp_nvim_lsp").default_capabilities()
       )
 
+      -- Neovim 0.11+ native LSP config (nvim-lspconfig now only ships the
+      -- per-server configs under lsp/; mason-lspconfig v2 enables installed
+      -- servers automatically via vim.lsp.enable()).
+      vim.lsp.config("*", {
+        capabilities = capabilities,
+      })
+
+      vim.lsp.config("tailwindcss", {
+        settings = {
+          tailwindCSS = {
+            experimental = {
+              classRegex = {
+                [[class= '([^']*)]],
+                [[class: '([^']*)]],
+                [[class= "([^"]*)]],
+                [[class: "([^"]*)]],
+                '~H""".*class="([^"]*)".*"""',
+                '~F""".*class="([^"]*)".*"""',
+              },
+            },
+          },
+        },
+      })
+
+      vim.lsp.config("ruby_lsp", {
+        init_options = {
+          addonSettings = {
+            ["Ruby LSP Rails"] = {
+              enablePendingMigrationsPrompt = false,
+            },
+          },
+        },
+      })
+      -- ruby-lsp is installed via bundler, not mason, so enable it explicitly.
+      vim.lsp.enable("ruby_lsp")
+
       require("mason").setup()
       require("mason-lspconfig").setup({
         ensure_installed = {
@@ -29,46 +65,11 @@ return {
           "stimulus_ls",
           "stylelint_lsp",
         },
-
-        handlers = {
-          function(server_name)
-            require("lspconfig")[server_name].setup({
-              capabilities = capabilities,
-            })
-          end,
-
-          ["tailwindcss"] = function()
-            local lspconfig = require("lspconfig")
-
-            lspconfig.tailwindcss.setup({
-              capabilities = capabilities,
-              settings = {
-                tailwindCSS = {
-                  experimental = {
-                    classRegex = {
-                      [[class= '([^']*)]],
-                      [[class: '([^']*)]],
-                      [[class= "([^"]*)]],
-                      [[class: "([^"]*)]],
-                      '~H""".*class="([^"]*)".*"""',
-                      '~F""".*class="([^"]*)".*"""',
-                    },
-                  },
-                },
-              },
-            })
-          end,
-        },
-      })
-
-      require("lspconfig").ruby_lsp.setup({
-        capabilities = capabilities,
-        init_options = {
-          addonSettings = {
-            ["Ruby LSP Rails"] = {
-              enablePendingMigrationsPrompt = false,
-            },
-          },
+        -- mason-lspconfig v2 auto-enables every installed Mason package that
+        -- has an lspconfig entry. stylua is only used via none-ls for
+        -- formatting, so don't also run it as a language server.
+        automatic_enable = {
+          exclude = { "stylua" },
         },
       })
     end,
