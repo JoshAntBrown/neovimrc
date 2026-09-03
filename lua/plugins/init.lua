@@ -11,10 +11,10 @@ return {
       "TmuxNavigatePrevious",
     },
     keys = {
-      { "<c-h>",  "<cmd><C-U>TmuxNavigateLeft<cr>" },
-      { "<c-j>",  "<cmd><C-U>TmuxNavigateDown<cr>" },
-      { "<c-k>",  "<cmd><C-U>TmuxNavigateUp<cr>" },
-      { "<c-l>",  "<cmd><C-U>TmuxNavigateRight<cr>" },
+      { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+      { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+      { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+      { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
     },
   },
 
@@ -41,29 +41,38 @@ return {
     "folke/zen-mode.nvim",
     opts = {
       window = {
+        backdrop = 1,
         height = 0.8,
         options = {
           signcolumn = "no",
           number = false,
           relativenumber = false,
-          colorcolumn = "0",
+          -- colorcolumn = "0",
         },
       },
       plugins = {
+        options = {
+          enabled = true,
+          laststatus = 0,
+        },
         tmux = {
           enabled = true,
         },
-        alacritty = {
-          enabled = true,
-          font = "14",
-        },
+        -- alacritty = {
+        --   enabled = true,
+        --   font = "14",
+        -- },
       },
     },
   },
 
   {
     "folke/twilight.nvim",
-    config = true,
+    opts = {
+      dimming = {
+        alpha = 0.5,
+      },
+    }
   },
 
   "preservim/vim-pencil",

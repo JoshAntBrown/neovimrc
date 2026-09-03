@@ -52,6 +52,8 @@ return {
       })
       -- ruby-lsp is installed via bundler, not mason, so enable it explicitly.
       vim.lsp.enable("ruby_lsp")
+      -- herb-language-server for ERB; defined in lua/lsp/herb_ls.lua
+      vim.lsp.enable("herb_ls")
 
       require("mason").setup()
       require("mason-lspconfig").setup({
@@ -83,10 +85,10 @@ return {
         sources = {
           null_ls.builtins.formatting.stylua,
           null_ls.builtins.formatting.prettier,
-          null_ls.builtins.formatting.erb_format,
-          null_ls.builtins.diagnostics.erb_lint.with({
-            ignore_stderr = true,
-          }),
+          -- null_ls.builtins.formatting.erb_format,
+          -- null_ls.builtins.diagnostics.erb_lint.with({
+          --   ignore_stderr = true,
+          -- }),
         },
       })
     end,
